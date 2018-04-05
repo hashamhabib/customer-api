@@ -1,0 +1,33 @@
+{
+  "configs": [
+    "customer_api.xml"
+  ],
+  "secureProperties": [],
+  "redeploymentEnabled": true,
+  "name": "customer-api",
+  "minMuleVersion": "4.1.1",
+  "requiredProduct": "MULE_EE",
+  "classLoaderModelLoaderDescriptor": {
+    "id": "mule",
+    "attributes": {
+      "exportedResources": [
+        "api\\.gitignore",
+        "api\\customer_api.raml",
+        "api\\examples\\customer_collection_example.raml",
+        "api\\examples\\customer_example.raml",
+        "api\\examples\\customer_post_request_example.raml",
+        "api\\examples\\customer_post_response_example.raml",
+        "api\\modules\\client-id-secured-trait\\1.0.0\\client-id-secured.raml",
+        "api\\modules\\customer-datatype\\1.0.0\\createdCustomer-datatype.raml",
+        "api\\modules\\customer-datatype\\1.0.0\\customer-datatype.raml",
+        "api\\modules\\error-datatype\\1.0.0\\error-datatype.raml",
+        "api\\modules\\pageable-trait\\1.0.0\\pageable-trait.raml",
+        "api\\modules\\rest-headers-trait\\1.0.0\\rest-headers-trait.raml"
+      ]
+    }
+  },
+  "bundleDescriptorLoader": {
+    "id": "mule",
+    "attributes": {}
+  }
+}

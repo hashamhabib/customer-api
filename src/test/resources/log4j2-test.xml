@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%-5p %d [%t] %c: %m%n"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+
+		<!-- Http Logger shows wire traffic on DEBUG. -->
+		<Logger name="org.mule.service.http" level="debug"/>
+        <Logger name="org.mule.extension.http" level="debug"/>
+	
+        <!-- Mule classes -->        
+        <Logger name="org.mule" level="debug"/>
+        <Logger name="com.mulesoft" level="debug"/>
+
+        <AsyncRoot level="debug">
+            <AppenderRef ref="Console"/>
+        </AsyncRoot>
+    </Loggers>
+
+</Configuration>

@@ -1,0 +1,102 @@
+#%RAML 1.0
+title: Deloitte Customer API
+version: 1.0.0
+baseUri: https://mocksvc.mulesoft.com/mocks/a239db6d-522c-4a0b-9a98-a10746f3f762/api # baseUri: https://localhost:8081/api
+mediaType: [application/json]
+
+traits:
+  headers: !include /modules/rest-headers-trait/1.0.0/rest-headers-trait.raml
+  pageable: !include /modules/pageable-trait/1.0.0/pageable-trait.raml
+  client-id-secured: !include /modules/client-id-secured-trait/1.0.0/client-id-secured.raml
+
+uses:
+  Customer: /modules/customer-datatype/1.0.0/customer-datatype.raml
+  CreatedCustomer: /modules/customer-datatype/1.0.0/createdCustomer-datatype.raml
+  Error: /modules/error-datatype/1.0.0/error-datatype.raml
+
+types:
+  objectName: Customer.customer
+  createdCustomer: CreatedCustomer.customer
+
+/customer:
+  is: [ headers, client-id-secured]
+  displayName: Customers
+  description: |
+    Working with customers:
+    * Retrieving all customers
+    * Creating customers
+  get:
+    description: |
+      Retrieve all the Customers.
+    is: [ pageable, client-id-secured]
+    queryParameters:
+      email:
+        displayName: The account email address
+        minLength: 0
+        maxLength: 255
+        required: false
+    responses:
+      200:
+        body:
+          application/json:
+            type: objectName[]
+            example: !include examples/customer_collection_example.raml
+  post:
+    is: [client-id-secured]
+    description: |
+      Create a new Customer
+    body:
+      application/json:
+        type: objectName
+        example: !include examples/customer_post_request_example.raml
+    responses:
+      201:
+        description: Created
+        body:
+          application/json:
+            type: createdCustomer
+            example: !include examples/customer_post_response_example.raml
+  /{id}:
+    displayName: Customer ID
+    uriParameters:
+      id:
+        type: string
+        example: 20a5ea46-a4ee-4542-93f4-9040a4ec078b
+        description: Represents the customer unique id
+    get:
+      is: [client-id-secured]
+      description: Get Customer by ID
+      responses:
+        200:
+          body:
+            application/json:
+              type: objectName
+              example: !include examples/customer_example.raml
+        400:
+          body:
+            application/json:
+              type: Error.error
+              example: |
+                {
+                  "message": "Bad message"
+                }
+        404:
+          body:
+            application/json:
+              type: Error.error
+              example: |
+                {
+                  "message": "Resource not found"
+                }
+    put:
+      is: [client-id-secured]
+      body:
+        application/json:
+          type: objectName
+          example: !include examples/customer_example.raml
+      responses:
+        204:
+    delete:
+      is: [client-id-secured]
+      responses:
+        204:
